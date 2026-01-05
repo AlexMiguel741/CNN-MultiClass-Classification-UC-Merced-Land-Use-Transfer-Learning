@@ -1,54 +1,41 @@
-# 🌍 CNN Multi-Class Classification: UC Merced Land Use Dataset
+# 🌍 Aerial Land Use Classification (Custom CNN vs. Transfer Learning)
 
-![TensorFlow](https://img.shields.io/badge/TensorFlow-2.x-orange)
-![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
-![License](https://img.shields.io/badge/License-MIT-green)
+![Framework](https://img.shields.io/badge/Framework-TensorFlow_2.x-orange)
+![Technique](https://img.shields.io/badge/Technique-Transfer_Learning-blue)
+![Dataset](https://img.shields.io/badge/Dataset-UC_Merced-green)
 
-This project implements a **Convolutional Neural Network (CNN)** to classify aerial imagery into 21 distinct land-use categories using the **UC Merced Land Use Dataset** [file:10]. The model is designed to recognize complex visual patterns from satellite data, distinguishing between classes such as "agricultural," "harbor," and "dense residential."
+This project tackles the multi-class classification problem using the **UC Merced Land Use Dataset**. It compares the performance of a custom-built Convolutional Neural Network (CNN) against a Transfer Learning approach using **VGG16** to classify satellite imagery into 21 distinct categories. [file:14]
 
-## 📌 Project Overview
-Remote sensing scene classification is a key task in earth observation. This repository provides an end-to-end deep learning pipeline—from raw data extraction to model evaluation—demonstrating how to process and classify optical remote sensing images [file:10].
+## 🎯 Project Goals
+*   **Data Pipeline:** Build a robust `ImageDataGenerator` pipeline with augmentation (rotations, zooms, flips) to handle 256x256 aerial images.
+*   **Custom Architecture:** Design a VGG-like CNN from scratch with increasing filter depth (8 $\to$ 128) to understand feature extraction.
+*   **Transfer Learning:** Implement VGG16 (pre-trained on ImageNet) using both **Feature Extraction** (frozen base) and **Fine-Tuning** strategies.
 
-**Goal:** Accurately predict the land-use category of 256x256 RGB images across 21 classes.
+## 📂 Dataset
+*   **Source:** UC Merced Land Use Dataset.
+*   **Classes (21):** Agricultural, Airplane, Baseball Diamond, Beach, Buildings, Chaparral, Dense Residential, Forest, Freeway, Golf Course, Harbor, Intersection, Medium Residential, Mobile Home Park, Overpass, Parking Lot, River, Runway, Sparse Residential, Storage Tanks, Tennis Court.
+*   **Preprocessing:** Images resized to `256x256`, normalized to `[0,1]`, and augmented. [file:14]
 
-## 📂 The Dataset
-- **Source:** UC Merced Land Use Dataset
-- **Classes:** 21 categories including:
-  `agricultural`, `airplane`, `baseballdiamond`, `beach`, `buildings`, `chaparral`, `denseresidential`, `forest`, `freeway`, `golfcourse`, `harbor`, `intersection`, `mediumresidential`, `mobilehomepark`, `overpass`, `parkinglot`, `river`, `runway`, `sparseresidential`, `storagetanks`, `tenniscourt`.
-- **Preprocessing:**
-  - **Rescaling:** Pixel values normalized to [0, 1] range.
-  - **Splitting:** Data divided into Training, Validation, and Test sets using `ImageDataGenerator` [file:10].
+## 🧠 Architectures
 
-## 🧠 Model Architecture
-The custom CNN architecture is built using the TensorFlow/Keras Functional API [file:10]:
+### 1. Custom CNN
+A sequential model built with 5 Convolutional blocks:
+*   **Layers:** `Conv2D` (3x3, padding='same') $\to$ `ReLU` $\to$ `MaxPooling2D` (2x2).
+*   **Depth:** Filters increase from 8 up to 128.
+*   **Head:** `Flatten` $\to$ `Dense` (512) $\to$ `Dense` (21, Softmax).
 
-1.  **Input:** `(256, 256, 3)` RGB images.
-2.  **Feature Extraction:**
-    -   5 Convolutional Blocks (`Conv2D` + `ReLU` + `MaxPooling2D`).
-    -   Filter depths increase progressively to capture hierarchical features (edges → textures → objects).
-3.  **Classification Head:**
-    -   `Flatten` layer.
-    -   **Dense Layer:** 512 units with `ReLU` activation.
-    -   **Output Layer:** 21 neurons with `Softmax` activation for multi-class probability.
-4.  **Optimization:**
-    -   **Optimizer:** Adam (`lr=1e-4`).
-    -   **Loss Function:** Categorical Crossentropy.
-
-## 📊 Performance
--   **Training Accuracy:** Achieves >98% on the training set.
--   **Validation Accuracy:** ~60-65% (indicating potential for further regularization techniques like Dropout or Data Augmentation).
--   **Evaluation:** Includes Confusion Matrix visualization to identify misclassified categories (e.g., distinguishing between different densities of residential areas) [file:10].
+### 2. Transfer Learning (VGG16)
+*   **Base:** VGG16 (ImageNet weights, top layers excluded).
+*   **Adaptation:** Added `GlobalAveragePooling2D` and a custom Dense classifier.
+*   **Strategy:** Initially froze all base layers, then fine-tuned the top convolutional block to adapt to aerial features.
 
 ## 🛠️ Tech Stack
--   **Deep Learning:** TensorFlow, Keras
--   **Data Processing:** NumPy, Pandas
--   **Visualization:** Matplotlib, Seaborn
--   **Environment:** Jupyter Notebook / Google Colab
+*   **Core:** Python 3, TensorFlow 2.x, Keras.
+*   **Visualization:** Matplotlib (prediction grids), TensorBoard (loss/accuracy curves).
+*   **Utils:** `ImageDataGenerator`, `ModelCheckpoint`, `EarlyStopping`.
 
-## 🚀 Usage
+## 📊 Results
+The project demonstrates that Transfer Learning significantly outperforms the custom CNN on this small dataset (2100 images total), converging faster and achieving higher validation accuracy by leveraging pre-learned visual patterns.
 
-### 1. Setup
-Clone the repo and install dependencies:
-```bash
-git clone https://github.com/yourusername/uc-merced-cnn.git
-pip install tensorflow numpy matplotlib pandas
+## 👨‍💻 Author
+**Alex Miguel Franco Martínez**
