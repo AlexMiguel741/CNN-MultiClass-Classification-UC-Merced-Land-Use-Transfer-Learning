@@ -4,7 +4,7 @@
 ![Technique](https://img.shields.io/badge/Technique-Transfer_Learning-blue)
 ![Dataset](https://img.shields.io/badge/Dataset-UC_Merced-green)
 
-This project tackles the multi-class classification problem using the **UC Merced Land Use Dataset**. It compares the performance of a custom-built Convolutional Neural Network (CNN) against a Transfer Learning approach using **VGG16** to classify satellite imagery into 21 distinct categories. [file:14]
+This project tackles the multi-class classification problem using the **UC Merced Land Use Dataset**. It compares the performance of a custom-built Convolutional Neural Network (CNN) against a Transfer Learning approach using **VGG16** to classify satellite imagery into 21 distinct categories.
 
 ## 🎯 Project Goals
 *   **Data Pipeline:** Build a robust `ImageDataGenerator` pipeline with augmentation (rotations, zooms, flips) to handle 256x256 aerial images.
@@ -14,7 +14,7 @@ This project tackles the multi-class classification problem using the **UC Merce
 ## 📂 Dataset
 *   **Source:** UC Merced Land Use Dataset.
 *   **Classes (21):** Agricultural, Airplane, Baseball Diamond, Beach, Buildings, Chaparral, Dense Residential, Forest, Freeway, Golf Course, Harbor, Intersection, Medium Residential, Mobile Home Park, Overpass, Parking Lot, River, Runway, Sparse Residential, Storage Tanks, Tennis Court.
-*   **Preprocessing:** Images resized to `256x256`, normalized to `[0,1]`, and augmented. [file:14]
+*   **Preprocessing:** Images resized to `256x256`, normalized to `[0,1]`, and augmented.
 
 ## 🧠 Architectures
 
